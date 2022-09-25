@@ -1,0 +1,248 @@
+﻿<Application x:Class="Lab1.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Lab1"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ControlTemplate x:Key="DeleteButton" TargetType="Button">
+            <Border Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" CornerRadius="10" x:Name="Butt">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="#505050"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsMouseOver, ElementName=Butt}" Value="true">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Background" Value="#606060"></Setter>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label HorizontalAlignment="Center" Content="{TemplateBinding Content}" FontWeight="DemiBold" FontSize="10" FontFamily="Montserrat" Foreground="White"></Label>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="SceneObject" TargetType="RadioButton">
+            <Border Margin="0 1 0 1" Height="26" HorizontalAlignment="Stretch" CornerRadius="13">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="#505050"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=RadioButton}, Path=IsChecked}" Value="true">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Background" Value="#606060"/>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid>
+                    <Label Content="{Binding Name}" FontSize="12" Margin="26 -1 50 0" Foreground="White" FontWeight="Bold"></Label>
+                    <Button Height="20" Width="20" HorizontalAlignment="Right" Margin="0 0 10 0" Command="{Binding DeleteCommand}" Template="{StaticResource DeleteButton}" Content="X"></Button>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="FlatButton" TargetType="Button">
+            <Border Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" CornerRadius="20" x:Name="Butt">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="#505050"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsMouseOver, ElementName=Butt}" Value="true">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Background" Value="#606060"></Setter>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Content}" FontWeight="DemiBold" FontSize="14" FontFamily="Montserrat" Foreground="White"></Label>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="Input" TargetType="TextBox">
+            <Border Background="{TemplateBinding Background}" Height="40" CornerRadius="20">
+                <Grid>
+                    <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Transparent" Margin="20 0 20 0" FontSize="16" FontFamily="Montserrat" FontWeight="DemiBold" Foreground="White"></TextBox>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="Lable" TargetType="Label">
+            <Label Content="{TemplateBinding Content}" Foreground="White" FontFamily="Montserrat" FontSize="{TemplateBinding FontSize}" FontWeight="DemiBold" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+        </ControlTemplate>
+        <ControlTemplate x:Key="PointEdit" TargetType="ContentControl">
+            <Border Height="50" CornerRadius="25" Background="#505050">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="X:" Grid.Column="0"  Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="Y:" Grid.Column="2"  Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <TextBox Grid.Column="1" Template="{StaticResource Input}" Background="#606060" Text="{Binding X, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Column="3" Template="{StaticResource Input}" Background="#606060" Text="{Binding Y, Mode=TwoWay}"></TextBox>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="Point" TargetType="ContentControl">
+            <Border Height="{TemplateBinding Height}" Background="#404040" CornerRadius="20">
+                <Grid Margin="20 5 20 5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBox Text="{Binding Name, Mode=TwoWay}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Template="{StaticResource Input}" Background="#505050" FontSize="16"></TextBox>
+                    <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="2" BorderBrush="#606060" BorderThickness="0 1" Margin="0 5 0 0"></Border>
+                    <Label Content="Properties" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="X:" Grid.Row="2" Grid.Column="0"  Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="Y:" Grid.Row="2" Grid.Column="2"  Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Template="{StaticResource Input}" Background="#505050" Text="{Binding X}"></TextBox>
+                    <TextBox Grid.Row="2" Grid.Column="3" Template="{StaticResource Input}" Background="#505050" Text="{Binding Y}"></TextBox>
+                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Template="{StaticResource FlatButton}" Height="40" Content="Move" Command="{Binding MoveCommand}"></Button>
+                        <Label Grid.Column="1" Content="dX:" Template="{StaticResource Lable}"></Label>
+                        <Label Grid.Column="3" Content="dy:" FontSize="14" Template="{StaticResource Lable}"></Label>
+                        <TextBox Grid.Column="2" Template="{StaticResource Input}" Background="#505050" Text="{Binding Dx}"></TextBox>
+                        <TextBox Grid.Column="4" Template="{StaticResource Input}" Background="#505050" Text="{Binding Dy}"></TextBox>
+                    </Grid>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="Shape" TargetType="ContentControl">
+            <Border Height="{TemplateBinding Height}" Background="#404040" CornerRadius="20">
+                <Grid Margin="20 5 20 5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="5*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBox Text="{Binding Name, Mode=TwoWay}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Template="{StaticResource Input}" Background="#505050" FontSize="16"></TextBox>
+                    <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="3" BorderBrush="#606060" BorderThickness="0 1" Margin="0 5 0 0" ></Border>
+                    <Label Content="Properties" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="Scale:" Grid.Row="2" Grid.Column="0" Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="X:" Grid.Row="2" Grid.Column="1"  Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="Y:" Grid.Row="2" Grid.Column="3"  Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <TextBox Grid.Row="2" Grid.Column="2" Template="{StaticResource Input}" Background="#505050" Text="{Binding ScaleX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBox Grid.Row="2" Grid.Column="4" Template="{StaticResource Input}" Background="#505050" Text="{Binding ScaleY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+                    <Label Content="Rotation:" Grid.Row="3" Grid.Column="0" Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="Z:" Grid.Row="3" Grid.Column="1"  Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" Template="{StaticResource Input}" Background="#505050" Text="{Binding Rotation, Mode=TwoWay}"></TextBox>
+
+                    <Button Grid.Row="4" Height="40" Content="Move:" Grid.Column="0" Template="{StaticResource FlatButton}" Command="{Binding MoveCommand}"></Button>
+                    <Label Content="dx:" Grid.Row="4" Grid.Column="1"  Template="{StaticResource Lable}" FontSize="14"></Label>
+                    <Label Content="dy:" Grid.Row="4" Grid.Column="3"  Template="{StaticResource Lable}" FontSize="14"></Label>
+                    <TextBox Grid.Row="4" Grid.Column="2" Template="{StaticResource Input}" Background="#505050" Text="{Binding Dx, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="4" Grid.Column="4" Template="{StaticResource Input}" Background="#505050" Text="{Binding Dy, Mode=TwoWay}"></TextBox>
+
+                    <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5" BorderBrush="#606060" BorderThickness="0 1" ></Border>
+                    <ScrollViewer Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5" Margin="0 10" VerticalScrollBarVisibility="Hidden">
+                        <ItemsControl ItemsSource="{Binding Points, Mode=TwoWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentControl Margin="0 0 0 2" Template="{StaticResource PointEdit}"></ContentControl>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <Button Grid.Row="6" Height="40" Content="Add Point" Grid.Column="0" Grid.ColumnSpan="5" Template="{StaticResource FlatButton}" Command="{Binding AddPointCommand}"></Button>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="Fractal" TargetType="ContentControl">
+            <Border Height="{TemplateBinding Height}" Background="#404040" CornerRadius="20">
+                <Grid Margin="20 5 20 5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="5*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBox Text="{Binding Name, Mode=TwoWay}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Template="{StaticResource Input}" Background="#505050" FontSize="16"></TextBox>
+                    <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="3" BorderBrush="#606060" BorderThickness="0 1" Margin="0 5 0 0" ></Border>
+                    <Label Content="Properties" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="Scale:" Grid.Row="2" Grid.Column="0" Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="X:" Grid.Row="2" Grid.Column="1"  Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="Y:" Grid.Row="2" Grid.Column="3"  Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <TextBox Grid.Row="2" Grid.Column="2" Template="{StaticResource Input}" Background="#505050" Text="{Binding ScaleX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBox Grid.Row="2" Grid.Column="4" Template="{StaticResource Input}" Background="#505050" Text="{Binding ScaleY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+                    <Label Content="Rotation:" Grid.Row="3" Grid.Column="0" Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <Label Content="Z:" Grid.Row="3" Grid.Column="1"  Template="{StaticResource Lable}" FontSize="16"></Label>
+                    <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" Template="{StaticResource Input}" Background="#505050" Text="{Binding Rotation, Mode=TwoWay}"></TextBox>
+
+                    <Button Grid.Row="4" Height="40" Content="Move:" Grid.Column="0" Template="{StaticResource FlatButton}" Command="{Binding MoveCommand}"></Button>
+                    <Label Content="dx:" Grid.Row="4" Grid.Column="1"  Template="{StaticResource Lable}" FontSize="14"></Label>
+                    <Label Content="dy:" Grid.Row="4" Grid.Column="3"  Template="{StaticResource Lable}" FontSize="14"></Label>
+                    <TextBox Grid.Row="4" Grid.Column="2" Template="{StaticResource Input}" Background="#505050" Text="{Binding Dx, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="4" Grid.Column="4" Template="{StaticResource Input}" Background="#505050" Text="{Binding Dy, Mode=TwoWay}"></TextBox>
+
+                    <Button Grid.Row="5" Grid.Column="0" Height="40" Content="Fractalize:" Template="{StaticResource FlatButton}" Command="{Binding CreateFractalCommand}"></Button>
+                    <Label Content="Count:" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Template="{StaticResource Lable}" FontSize="14"></Label>
+                    <TextBox Grid.Row="5" Grid.Column="4" Template="{StaticResource Input}" Background="#505050" Text="{Binding IterationCount, Mode=TwoWay}"></TextBox>
+
+                    <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" BorderBrush="#606060" BorderThickness="0 1" ></Border>
+                    <ScrollViewer Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" Margin="0 10" VerticalScrollBarVisibility="Hidden">
+                        <ItemsControl ItemsSource="{Binding Points, Mode=TwoWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentControl Margin="0 0 0 2" Template="{StaticResource PointEdit}"></ContentControl>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <Button Grid.Row="7" Height="40" Content="Add Point" Grid.Column="0" Grid.ColumnSpan="5" Template="{StaticResource FlatButton}" Command="{Binding AddPointCommand}"></Button>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </Application.Resources>
+</Application>
