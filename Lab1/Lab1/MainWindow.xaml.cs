@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using Lab1.Geometry;
 
 
@@ -128,8 +130,14 @@ namespace Lab1
                     new Vector2(283,277)
                 }
             };
-            areaFiller.CalculateFillArea(15);
+            List<Vector2> vector2s = areaFiller.Fill(30,15,Math.PI / 3);
             areaFiller.Print(DrawCanvas.Children);
+            foreach(var vector in vector2s) 
+            {
+                Thickness pos = new Thickness { Left = vector.x - 2, Top = vector.y - 2, Right = 0, Bottom = 0 };
+                Ellipse ellipse = new Ellipse { Fill = Brushes.Cyan, Height = 4, Width = 4, Margin = pos };
+                DrawCanvas.Children.Add(ellipse);
+            }
             #endregion
         }
 
