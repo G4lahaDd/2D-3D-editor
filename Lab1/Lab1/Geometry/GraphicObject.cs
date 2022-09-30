@@ -64,6 +64,7 @@ namespace Lab1.Geometry
 
         public GraphicObject()
         {
+
             Color = Brushes.White;
             DeleteCommand = new LambdaCommand(OnDeleteCommandExecuted);
             MoveCommand = new LambdaCommand(Move);

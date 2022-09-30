@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -138,6 +139,17 @@ namespace Lab1
                 Ellipse ellipse = new Ellipse { Fill = Brushes.Cyan, Height = 4, Width = 4, Margin = pos };
                 DrawCanvas.Children.Add(ellipse);
             }
+
+            List<Vector3> test3d = new List<Vector3>()
+            {
+                new Vector3(200,200,100),
+                new Vector3(200,500,100),
+                new Vector3(500,500,200),
+                new Vector3(500,200,200)
+            };
+            LocalCoordinates lc = new LocalCoordinates();
+            List<Vector2> test2d = lc.TransformToLocalCoordinate2(test3d);
+            lc.TransformToGlobalCoordinate2(test2d);
             #endregion
         }
 

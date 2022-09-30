@@ -66,6 +66,11 @@ namespace Lab1.Geometry
             return Math.Acos(a * b / (a.Abs() * b.Abs()));
         }
 
+        public override string ToString()
+        {
+         
+            return $"({x}, {y})";
+        }
     }
 
     public class Vector3
@@ -128,6 +133,16 @@ namespace Lab1.Geometry
             return Math.Acos(a * b / (a.Abs() * b.Abs()));
         }
 
+        public static Vector3 Product(Vector3 a, Vector3 b) 
+        {
+            return new Vector3(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
+        }
+
+        public override string ToString()
+        {
+
+            return $"({x}, {y}, {z})";
+        }
     }
 
     public class AreaFiller
@@ -192,7 +207,7 @@ namespace Lab1.Geometry
             }
         }
 
-        public static Vector2 GetMidPoint(List<Vector2> points)
+        private static Vector2 GetMidPoint(List<Vector2> points)
         {
             double X = 0;
             double Y = 0;
@@ -221,7 +236,6 @@ namespace Lab1.Geometry
             CalculateFillArea(radiusOffset);
             //Midpoint
             Vector2 midpoint = GetMidPoint(areaToFill);
-            Debug.WriteLine($"Mid point: ({midpoint.x}, {midpoint.y})");
             //the two extreme points of the rectangle in which the circle is inscribed            
             Vector2 rectMin = new Vector2(areaToFill[0].x, areaToFill[0].y);
             Vector2 rectMax = new Vector2(areaToFill[0].x, areaToFill[0].y);
@@ -243,8 +257,6 @@ namespace Lab1.Geometry
                 if (areaToFill[i].x > rectMax.x)
                 { rectMax.x = areaToFill[i].x; }
             }
-            Debug.WriteLine($"rect lb point: ({rectMin.x}, {rectMin.y})");
-            Debug.WriteLine($"rect rt point: ({rectMax.x}, {rectMax.y})");
             //Get Lines in Rect
             double betta = 2 * Math.PI / 3 - patternRotation;
             double dx = radiusOffset * Math.Cos(betta);
@@ -257,7 +269,6 @@ namespace Lab1.Geometry
                 temp += offset;
                 result = LineOfPoints.CreateLine(rectMin, rectMax, temp, Math.Tan(patternRotation), radiusOffset);
                 if (result == null) break;
-                Debug.WriteLine("Left Branch");
                 lines.Add(result);
             }
             temp = midpoint;
@@ -266,7 +277,6 @@ namespace Lab1.Geometry
                 result = LineOfPoints.CreateLine(rectMin, rectMax, temp, Math.Tan(patternRotation), radiusOffset);
                 if (result == null) break;
                 lines.Add(result);
-                Debug.WriteLine("Right Branch");
                 temp -= offset;
             }
             //Get Points in Area
@@ -287,7 +297,7 @@ namespace Lab1.Geometry
         /// checking if a point is in an area
         /// </summary>
         /// <returns></returns>
-        public bool CheckPointInArea(Vector2 point)
+        private bool CheckPointInArea(Vector2 point)
         {
             double b = point.y - point.x; //y = x + b
 
@@ -368,19 +378,15 @@ namespace Lab1.Geometry
         /// <returns>null, if line does not cross rect</returns>
         public static LineOfPoints CreateLine(Vector2 p1, Vector2 p2, Vector2 origin, double tg, double offset)
         {
-            Debug.WriteLine($"origin point: ({origin.x}, {origin.y}), tg = {tg}");
             double b = origin.y - tg * origin.x;
             if (tg < 0.015f && (origin.y > p2.y || origin.y < p1.y))
             {
-                Debug.WriteLine("Horizontal line");
                 return null;
             }
             if (tg * p1.x + b > p2.y || tg * p2.x + b < p1.y)
             {
-                Debug.WriteLine("out");
                 return null;
             }
-            Debug.WriteLine("CreateLine");
             return new LineOfPoints(p1, p2, origin, tg, offset);
         }
     }
