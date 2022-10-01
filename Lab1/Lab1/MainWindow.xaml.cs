@@ -99,58 +99,7 @@ namespace Lab1
             }
             InitializeComponent();
             InitTemplates();
-            DataContext = this;
-
-            #region test
-            //AreaFiller tester = new AreaFiller()
-            //{
-            //    area = new List<Vector2>()
-            //    {
-            //        new Vector2(100,300),
-            //        new Vector2(200,200),
-            //        new Vector2(400,200),
-            //        new Vector2(550,340),
-            //        new Vector2(270,410)
-            //    }
-            //};
-            //tester.CalculateFillArea(20);
-            //tester.Print(DrawCanvas.Children);
-            AreaFiller areaFiller = new AreaFiller()
-            {
-                area = new List<Vector2>()
-                {
-                    new Vector2(400,40),
-                    new Vector2(517,277),
-                    new Vector2(777, 315),
-                    new Vector2(589, 500),
-                    new Vector2(633, 759),
-                    new Vector2(400,636),
-                    new Vector2(167,759),
-                    new Vector2(211, 500),
-                    new Vector2(22, 315),
-                    new Vector2(283,277)
-                }
-            };
-            List<Vector2> vector2s = areaFiller.Fill(30,15,Math.PI / 3);
-            areaFiller.Print(DrawCanvas.Children);
-            foreach(var vector in vector2s) 
-            {
-                Thickness pos = new Thickness { Left = vector.x - 2, Top = vector.y - 2, Right = 0, Bottom = 0 };
-                Ellipse ellipse = new Ellipse { Fill = Brushes.Cyan, Height = 4, Width = 4, Margin = pos };
-                DrawCanvas.Children.Add(ellipse);
-            }
-
-            List<Vector3> test3d = new List<Vector3>()
-            {
-                new Vector3(200,200,100),
-                new Vector3(200,500,100),
-                new Vector3(500,500,200),
-                new Vector3(500,200,200)
-            };
-            LocalCoordinates lc = new LocalCoordinates();
-            List<Vector2> test2d = lc.TransformToLocalCoordinate2(test3d);
-            lc.TransformToGlobalCoordinate2(test2d);
-            #endregion
+            DataContext = this;        
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

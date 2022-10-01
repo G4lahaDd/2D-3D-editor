@@ -7,150 +7,15 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace Lab1.Geometry
+namespace Lab1._3D.G2LTransform
 {
-    public class Vector2
-    {
-        public double x;
-        public double y;
-
-        public Vector2()
-        {
-            x = 0;
-            y = 0;
-        }
-
-        public Vector2(double x, double y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-
-        public static Vector2 operator +(Vector2 vector1, Vector2 vector2)
-        {
-            return new Vector2(vector1.x + vector2.x, vector1.y + vector2.y);
-        }
-
-        public static Vector2 operator -(Vector2 vector1, Vector2 vector2)
-        {
-            return new Vector2(vector1.x - vector2.x, vector1.y - vector2.y);
-        }
-
-        public static double operator *(Vector2 vector1, Vector2 vector2)
-        {
-            return vector1.x * vector2.x + vector1.y * vector2.y;
-        }
-
-        public static Vector2 operator *(Vector2 vector, double a)
-        {
-            return new Vector2(vector.x * a, vector.y * a);
-        }
-
-        /// <summary>
-        /// finding the length of a vector
-        /// </summary>
-        /// <returns>absolute value of vector</returns>
-        public double Abs()
-        {
-            return Math.Sqrt(x * x + y * y);
-        }
-
-        /// <summary>
-        /// finding the angle between vector a and b
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns>Angle in radians</returns>
-        public static double GetAngleBetween(Vector2 a, Vector2 b)
-        {
-            return Math.Acos(a * b / (a.Abs() * b.Abs()));
-        }
-
-        public override string ToString()
-        {
-         
-            return $"({x}, {y})";
-        }
-    }
-
-    public class Vector3
-    {
-        public double x;
-        public double y;
-        public double z;
-
-        public Vector3()
-        {
-            x = 0;
-            y = 0;
-            z = 0;
-        }
-
-        public Vector3(double x, double y, double z)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        public static Vector3 operator +(Vector3 vector1, Vector3 vector2)
-        {
-            return new Vector3(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z);
-        }
-
-        public static Vector3 operator -(Vector3 vector1, Vector3 vector2)
-        {
-            return new Vector3(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z);
-        }
-
-        public static double operator *(Vector3 vector1, Vector3 vector2)
-        {
-            return vector1.x * vector2.x + vector1.y * vector2.y + vector1.z * vector2.z;
-        }
-
-        public static Vector3 operator *(Vector3 vector, double a)
-        {
-            return new Vector3(vector.x * a, vector.y * a, vector.z * a);
-        }
-
-        /// <summary>
-        /// finding the length of a vector
-        /// </summary>
-        /// <returns>absolute value of vector</returns>
-        public double Abs()
-        {
-            return Math.Sqrt(x * x + y * y + z * z);
-        }
-
-        /// <summary>
-        /// finding the angle between vector a and b
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns>Angle in radians</returns>
-        public static double GetAngleBetween(Vector3 a, Vector3 b)
-        {
-            return Math.Acos(a * b / (a.Abs() * b.Abs()));
-        }
-
-        public static Vector3 Product(Vector3 a, Vector3 b) 
-        {
-            return new Vector3(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
-        }
-
-        public override string ToString()
-        {
-
-            return $"({x}, {y}, {z})";
-        }
-    }
-
+ 
     public class AreaFiller
     {
         public List<Vector2> area = new List<Vector2>();
         List<Vector2> areaToFill = new List<Vector2>();
         List<LineOfPoints> lines = new List<LineOfPoints>();
-
+#if DEBUG
         public void Print(UIElementCollection content)
         {
             Line line = new Line { Stroke = Brushes.Gray, X1 = area[0].x, X2 = area[area.Count - 1].x, Y1 = area[0].y, Y2 = area[area.Count - 1].y, StrokeThickness = 2 };
@@ -179,7 +44,7 @@ namespace Lab1.Geometry
                 content.Add(ellipse);
             }
         }
-
+#endif
         private void CalculateFillArea(double offset)
         {
             areaToFill.Clear();
@@ -221,9 +86,6 @@ namespace Lab1.Geometry
             return new Vector2(X, Y);
         }
 
-
-        /// <summary>
-        /// </summary>
         /// <param name="r">Radius of hole</param>
         /// <param name="h">wall width</param>
         /// <param name="patternRotation">in radians</param>
@@ -240,7 +102,7 @@ namespace Lab1.Geometry
             Vector2 rectMin = new Vector2(areaToFill[0].x, areaToFill[0].y);
             Vector2 rectMax = new Vector2(areaToFill[0].x, areaToFill[0].y);
             //Clamp rotation
-            if (patternRotation > (Math.PI / 3)) { patternRotation %= (Math.PI / 3); }
+            if (patternRotation > Math.PI / 3) { patternRotation %= Math.PI / 3; }
             else if (patternRotation < 0)
             {
                 patternRotation = Math.PI / 3 - (-patternRotation) % (Math.PI / 3);
@@ -335,7 +197,7 @@ namespace Lab1.Geometry
         }
     }
 
-    public class LineOfPoints
+   class LineOfPoints
     {
         Vector2 p1, p2;
         Vector2 origin;
@@ -390,7 +252,5 @@ namespace Lab1.Geometry
             return new LineOfPoints(p1, p2, origin, tg, offset);
         }
     }
-
-
 }
 
