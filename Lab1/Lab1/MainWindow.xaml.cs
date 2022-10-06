@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Lab1._3D;
 using Lab1.Geometry;
 
 
@@ -97,9 +98,22 @@ namespace Lab1
             {
                 graphicObject.DeleteObjectEvent += DeleteObject;
             }
-            InitializeComponent();
+            InitializeComponent(); 
+            //TEST
+            World wrld = new World();
+            wrld.Visibility = Visibility.Visible;
+            wrld.Activate();
+            //TEST
             InitTemplates();
-            DataContext = this;        
+            DataContext = this;
+
+            #region test
+            //Vector2[] a= Camera.Test();
+            //DrawCanvas.Children.Add(new Line { Stroke = Brushes.Red, X1 = a[0].x, X2 = a[1].x, Y1 = a[0].y, Y2 = a[1].y, StrokeThickness = 2 });
+            //DrawCanvas.Children.Add(new Line { Stroke = Brushes.Green, X1 = a[0].x, X2 = a[2].x, Y1 = a[0].y, Y2 = a[2].y, StrokeThickness = 2 });
+            //DrawCanvas.Children.Add(new Line { Stroke = Brushes.Blue, X1 = a[0].x, X2 = a[3].x, Y1 = a[0].y, Y2 = a[3].y, StrokeThickness = 2 });
+           
+            #endregion
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

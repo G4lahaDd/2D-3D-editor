@@ -16,7 +16,14 @@
             <RowDefinition Height="250"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="Screen" Grid.ColumnSpan="2" Grid.RowSpan="2"></Canvas>
+        <Canvas x:Name="Screen" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                Background="#151515"
+                MouseLeftButtonDown="s_MouseLeftButtonDown"
+                MouseLeftButtonUp="s_MouseLeftButtoUp"
+                MouseMove="s_MouseMove"
+                KeyDown="s_KeyDown"
+                KeyUp="s_KeyUp"
+                MouseWheel="s_MouseWheel" ></Canvas>
         <Border Grid.Column="1" Background="#202020" CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>

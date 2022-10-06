@@ -44,6 +44,24 @@ namespace Lab1._3D
             return new Vector3(vector.x * a, vector.y * a, vector.z * a);
         }
 
+        public static Vector3 operator *(Vector3 vector, Matrix3x3 m)
+        {
+            double _x = m[0] * vector.x + m[1] * vector.y + m[2] * vector.z;
+            double _y = m[3] * vector.x + m[4] * vector.y + m[5] * vector.z;
+            double _z = m[6] * vector.x + m[7] * vector.y + m[8] * vector.z;
+            return new Vector3(_x,_y,_z);
+        }
+
+        public Vector3 Rotate(double rx, double rz) 
+        {
+            Vector3 result = this * new Matrix3x3(RotationAxis.X, rx) * new Matrix3x3(RotationAxis.Z, rz);
+            return result;
+        }
+        public Vector3 Rotate(Vector2 rot)
+        {
+            return Rotate(rot.x, rot.y);
+        }
+
         /// <summary>
         /// finding the length of a vector
         /// </summary>
@@ -74,6 +92,8 @@ namespace Lab1._3D
 
             return $"({x}, {y}, {z})";
         }
+
+        
     }
 
 }
