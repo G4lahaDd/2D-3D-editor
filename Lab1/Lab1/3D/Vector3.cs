@@ -10,6 +10,39 @@ namespace Lab1._3D
         public double y;
         public double z;
 
+        public string X
+        {
+            get
+            {
+                return x.ToString();
+            }
+            set
+            {
+                x = Double.Parse(value);
+            }
+        }
+        public string Y
+        {
+            get
+            {
+                return y.ToString();
+            }
+            set
+            {
+                y = Double.Parse(value);
+            }
+        }
+        public string Z
+        {
+            get
+            {
+                return z.ToString();
+            }
+            set
+            {
+                z = Double.Parse(value);
+            }
+        }
         public Vector3()
         {
             x = 0;

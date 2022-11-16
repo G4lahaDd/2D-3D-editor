@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Shapes;
 
 namespace Lab1._3D
@@ -85,7 +87,24 @@ namespace Lab1._3D
                 return new Vector2(x_pixel, y_pixel) + center;
             }           
         }
+        
+        public Vector2 GetPointOnScreen3(Vector3 p) 
+        {
+            Vector3 pointVector = p - position;
 
+            double projection = pointVector * ViewRay;
+            if (Math.Abs(projection) < 0.001) return null;
+
+            pointVector *= Math.Abs(viewDistanse / projection);
+
+            Vector3 pointOnScreen = pointVector + position - ViewRay * viewDistanse;
+
+            double h = (width / 2) / Math.Tan(FOV / 2);//  viewDistanse in pixels
+
+            double x_pixel = (pointOnScreen * rightAxis) * h / viewDistanse;
+            double y_pixel = (pointOnScreen * (upAxis * -1)) * h / viewDistanse;
+            return new Vector2(x_pixel, y_pixel) + center;
+        }
         public Line2D DrawLine(Line3D line)
         {
             Debug.WriteLine($"\nviewray: {ViewRay}");
@@ -133,13 +152,48 @@ namespace Lab1._3D
 
         public Line2D DrawLine2(Line3D line)
         {
-            Vector2 p1 = GetPointOnScreen2(line.p1);
-            Vector2 p2 = GetPointOnScreen2(line.p2);
+            //Vector2 p1 = GetPointOnScreen2(line.p1);
+            //Vector2 p2 = GetPointOnScreen2(line.p2);
+            Vector2 p1 = GetPointOnScreen3(line.p1);
+            Vector2 p2 = GetPointOnScreen3(line.p2);
             if (p1 == null || p2 == null) return null;
             return new Line2D(p1, p2, line);
 
         }
-            public static Vector2[] Test()
+
+        public void DrawObject3D(GraphicObject3D obj, UIElementCollection content) 
+        {
+            List<Vector2> points = new List<Vector2>();
+            List<Face> faces = new List<Face>();
+
+            for(int i = 0; i < obj.points.Count; i++) 
+            {
+                points.Add(GetPointOnScreen2(obj.points[i]));
+            }
+
+            for(int i = 0; i < obj.faces.Count; i++) 
+            {
+                if(obj.faces[i].normal * ViewRay > 0) 
+                {
+                    faces.Add(obj.faces[i]);
+                }
+            }
+
+            faces.OrderBy(x => (x.midpoint - position).Abs());
+
+            for(int i = faces.Count-1; i >= 0; i--)
+            {
+                Polygon temp = new Polygon();
+                for(int j = 0; j < faces[i].points.Count; j++)
+                {
+                    temp.Points.Add(points[faces[i].points[j]].GetPoint());
+                }
+                temp.Fill = faces[i].GetColor();
+                content.Add(temp);
+            }
+        }
+
+        public static Vector2[] Test()
         {
             Camera camera = new Camera();
             camera.width = 400;

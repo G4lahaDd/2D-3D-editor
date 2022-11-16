@@ -10,7 +10,7 @@
     <Grid Background="#151515">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="250"/>
@@ -23,15 +23,16 @@
                 MouseMove="s_MouseMove"
                 KeyDown="s_KeyDown"
                 KeyUp="s_KeyUp"
-                MouseWheel="s_MouseWheel" ></Canvas>
-        <Border Grid.Column="1" Background="#202020" CornerRadius="10">
+                MouseWheel="s_MouseWheel" >
+        </Canvas>
+        <Border Grid.Column="1" Background="#202020" CornerRadius="10" Margin="0 10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <ScrollViewer Margin="10" VerticalScrollBarVisibility="Hidden">
-                    <ItemsControl>
+                    <ItemsControl x:Name="Objects3d" ItemsSource="{Binding Objects, Mode =TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel/>
@@ -39,11 +40,25 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
+                                <RadioButton Template="{StaticResource SceneObject}" GroupName="Objects3D" Click="OpenObject3DSettings"></RadioButton>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
             </Grid>
         </Border>
+        <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+            <StackPanel x:Name="ObjectSettings">
+
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel x:Name="MenuStack" Orientation="Horizontal" Height="50" VerticalAlignment="Top">
+            <Button Template="{StaticResource FlatButton}" Width="100" Content="XY" Margin="2 5" Command="{Binding ProjectionCommand}" CommandParameter="XY"/>
+            <Button Template="{StaticResource FlatButton}" Width="100" Content="YZ" Margin="2 5"  Command="{Binding ProjectionCommand}" CommandParameter="YZ"/>
+            <Button Template="{StaticResource FlatButton}" Width="100" Content="XZ" Margin="2 5" Command="{Binding ProjectionCommand}" CommandParameter="XZ"/>
+            <Button Template="{StaticResource FlatButton}" Width="100" Content="Isometry" Margin="2 5" Command="{Binding ProjectionCommand}" CommandParameter="ISO"/>
+            <Button Template="{StaticResource FlatButton}" Width="100" Content="Dimetria" Margin="2 5" Command="{Binding ProjectionCommand}" CommandParameter="DIM"/>
+            <Button Template="{StaticResource FlatButton}" Width="100" Content="trimetry" Margin="2 5" Command="{Binding ProjectionCommand}" CommandParameter="TRI"/>
+        </StackPanel>
     </Grid>
 </Window>

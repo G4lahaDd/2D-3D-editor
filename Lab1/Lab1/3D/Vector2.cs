@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace Lab1._3D
@@ -8,6 +9,30 @@ namespace Lab1._3D
     {
         public double x;
         public double y;
+
+        public string X 
+        {
+            get 
+            {
+                return x.ToString();
+            }
+            set 
+            {
+                x = Double.Parse(value);
+            }
+        }
+        public string Y
+        {
+            get
+            {
+                return y.ToString();
+            }
+            set
+            {
+                y = Double.Parse(value);
+            }
+        }
+
 
         public Vector2()
         {
@@ -59,6 +84,11 @@ namespace Lab1._3D
         public static double GetAngleBetween(Vector2 a, Vector2 b)
         {
             return Math.Acos(a * b / (a.Abs() * b.Abs()));
+        }
+
+        public System.Windows.Point GetPoint() 
+        {
+            return new System.Windows.Point(x,y);
         }
 
         public override string ToString()

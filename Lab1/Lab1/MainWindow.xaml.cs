@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Lab1._3D;
+using Lab1._3D.G2LTransform;
 using Lab1.Geometry;
 
 
@@ -99,21 +101,29 @@ namespace Lab1
                 graphicObject.DeleteObjectEvent += DeleteObject;
             }
             InitializeComponent(); 
-            //TEST
-            World wrld = new World();
-            wrld.Visibility = Visibility.Visible;
-            wrld.Activate();
-            //TEST
             InitTemplates();
             DataContext = this;
 
-            #region test
-            //Vector2[] a= Camera.Test();
-            //DrawCanvas.Children.Add(new Line { Stroke = Brushes.Red, X1 = a[0].x, X2 = a[1].x, Y1 = a[0].y, Y2 = a[1].y, StrokeThickness = 2 });
-            //DrawCanvas.Children.Add(new Line { Stroke = Brushes.Green, X1 = a[0].x, X2 = a[2].x, Y1 = a[0].y, Y2 = a[2].y, StrokeThickness = 2 });
-            //DrawCanvas.Children.Add(new Line { Stroke = Brushes.Blue, X1 = a[0].x, X2 = a[3].x, Y1 = a[0].y, Y2 = a[3].y, StrokeThickness = 2 });
-           
-            #endregion
+            //Test
+            //AreaFiller af = new AreaFiller();
+            //af.area = new List<Vector2>()
+            //{
+            //    new Vector2(200,200),
+            //    new Vector2(600,200),
+            //    new Vector2(600,500),
+            //    new Vector2(200,500)
+
+            //};
+            //List<Vector2> vector2s = af.Fill(10, 5, Math.PI / 6);
+            //af.PrintFill(DrawCanvas.Children);
+            //af.Print(DrawCanvas.Children);
+            //foreach (var vector2 in vector2s)
+            //{
+            //    Thickness pos = new Thickness { Left = vector2.x - 2, Top = vector2.y - 2, Right = 0, Bottom = 0 };
+            //    Ellipse ellipse = new Ellipse { Fill = Brushes.White, Height = 4, Width = 4, Margin = pos };
+            //    DrawCanvas.Children.Add(ellipse);
+            //}
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -26,7 +26,9 @@ namespace Lab1
         {
             InitializeComponent();
             world = this;
-            scene = new Scene(Screen.Children);
+            scene = new Scene(Screen.Children, ObjectSettings.Children);
+            Objects3d.DataContext = scene;
+            MenuStack.DataContext = scene;
         }
 
 
@@ -36,5 +38,6 @@ namespace Lab1
         private void s_MouseWheel(object sender, MouseWheelEventArgs e) => scene.OnScroll(sender, e);
         private void s_KeyDown(object sender, KeyEventArgs e) => scene.OnShiftDown(sender, e);
         private void s_KeyUp(object sender, KeyEventArgs e) => scene.OnShiftUp(sender, e);
+        private void OpenObject3DSettings(object sender, RoutedEventArgs e) => scene.OpenObjectSettings(sender, e);
     }
 }
