@@ -155,7 +155,7 @@ namespace Lab1._3D
         {
             //test
             //objects.Add(ObjReader.ReadObj("Monkey.obj"));// or Monkey.obj
-            objects3D.Add(ObjReader.ReadGraphicObj("Monkey.obj"));// or Monkey.obj
+            objects3D.Add(ObjReader.ReadGraphicObj("Ship.obj"));// or Monkey.obj or Ship.obj
             //test
 
             this.content = content;

@@ -43,6 +43,7 @@ namespace Lab1._3D
                 z = Double.Parse(value);
             }
         }
+
         public Vector3()
         {
             x = 0;

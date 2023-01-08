@@ -61,7 +61,7 @@
         <ControlTemplate x:Key="Input" TargetType="TextBox">
             <Border Background="{TemplateBinding Background}" Height="40" CornerRadius="20">
                 <Grid>
-                    <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Transparent" Margin="20 0 20 0" FontSize="16" FontFamily="Montserrat" FontWeight="DemiBold" Foreground="White"></TextBox>
+                    <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" Background="Transparent" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalAlignment="Center" BorderBrush="Transparent" Margin="20 0 20 0" FontSize="16" FontFamily="Montserrat" FontWeight="DemiBold" Foreground="White"></TextBox>
                 </Grid>
             </Border>
         </ControlTemplate>
